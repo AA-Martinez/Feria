@@ -24,7 +24,6 @@ public class FirstPersonMovementScript : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         
         Vector3 dir = new Vector3(horizontal, 0f, vertical).normalized;
-        Vector3 moveDir = new Vector3();
         
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -41,7 +40,7 @@ public class FirstPersonMovementScript : MonoBehaviour
         float tarAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
         float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, tarAngle, ref TurnSmoothVelocity, TurnSmoothTime);
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
-        moveDir = Quaternion.Euler(0f, tarAngle, 0f) * Vector3.forward;
+        Vector3 moveDir = Quaternion.Euler(0f, tarAngle, 0f) * Vector3.forward;
         
       
         if (dir.magnitude >= 0.1f)

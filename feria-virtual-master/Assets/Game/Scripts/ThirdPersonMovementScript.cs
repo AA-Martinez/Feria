@@ -37,16 +37,15 @@ public class ThirdPersonMovementScript : MonoBehaviour
             IsRunning = false;
             Speed = 6f;
         }
+
+        float tarAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, tarAngle, ref TurnSmoothVelocity, TurnSmoothTime);
+        transform.rotation = Quaternion.Euler(0f, angle, 0f);
+        Vector3 moveDir = Quaternion.Euler(0f, tarAngle, 0f) * Vector3.forward;
         
         if (dir.magnitude >= 0.1f)
         {
             animator.SetFloat("Speed",Mathf.Abs(dir.magnitude));
-            float tarAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, tarAngle, ref TurnSmoothVelocity, TurnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            Vector3 moveDir = Quaternion.Euler(0f, tarAngle, 0f) * Vector3.forward;
-
             if (IsRunning)
             {
                 animator.SetBool("IsRunning", true);
@@ -63,6 +62,9 @@ public class ThirdPersonMovementScript : MonoBehaviour
             animator.SetBool("IsRunning", false);
             animator.SetFloat("Speed", 0);
         }
+        
 
     }
+
+    
 }
