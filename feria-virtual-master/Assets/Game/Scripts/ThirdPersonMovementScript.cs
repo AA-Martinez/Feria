@@ -13,15 +13,33 @@ public class ThirdPersonMovementScript : MonoBehaviour
     public float TurnSmoothTime = 0.1f;
     float TurnSmoothVelocity;
     public bool IsRunning;
+
+    public bool Immobile;
+    public GameObject quiz;
     void Start()
     {
-        
+        Immobile = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!Immobile)
+        {
+            Movement();
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
 
+    void Movement()
+    {
+        if (Input.GetKey(KeyCode.X))
+        {
+            quiz.SetActive(true);
+        }
         if (Input.GetKey(KeyCode.Escape))
         {
             Cursor.lockState = CursorLockMode.None;
@@ -86,8 +104,6 @@ public class ThirdPersonMovementScript : MonoBehaviour
             animator.SetBool("IsRunning", false);
             animator.SetFloat("Speed", 0);
         }
-        
-
     }
 
     
